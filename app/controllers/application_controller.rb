@@ -1,6 +1,9 @@
 class ApplicationController < ActionController::Base
 
-    before_filter :require_login
+    # before_filter :require_login
+
+    helper_method :current_user
+    helper_method :require_login
 
     private
 
