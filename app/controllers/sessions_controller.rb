@@ -4,11 +4,11 @@ class SessionsController < ApplicationController
 
   def create
 
-    @user = User.find_by(username: params[:username])
+    @user = User.find_by(name: params[:name])
 
     if @user
 
-      sessions[:user_id] = @user.user_id
+      session[:current_user_id] = @user.id
 
       redirect_to '/welcome'
 
@@ -17,6 +17,13 @@ class SessionsController < ApplicationController
       redirect_to '/login'
 
     end
+
+  end
+
+  def destroy
+
+    @_current_user = session[:current_user_id] = nil
+    redirect_to root_url
 
   end
 
