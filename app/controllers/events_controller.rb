@@ -11,7 +11,7 @@ class EventsController < ApplicationController
     def create
         @event = Event.new(event_params)
 
-        @event.creator_id = session[:current_user_id]
+        @event.save
 
         redirect_to '/welcome'
     end
@@ -23,7 +23,7 @@ class EventsController < ApplicationController
         end
 
         # Only allow a list of trusted parameters through.
-        def user_params
+        def event_params
             params.require(:event).permit(:description)
         end
 end

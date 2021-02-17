@@ -7,14 +7,20 @@
 <% if logged_in? %>
 
     <h1>Hey <%= current_user.name %></h1>
+
+    <% if Event.where(creator_id: current_user.id) %>
+
+        <h3>Created Events</h3>
+
+        <% Event.where(creator_id: current_user.id).each do |event| %>
+
+            <p> <%= event %> </p>
+
+        <% end %>
     
-    <h3>Created Events</h3>
-
-    <% Event.where(creator_id: current_user.id).each do |event| %>
-
-        <p> <%= event %> </p>
-
     <% end %>
+
+    <%= link_to 'Create new event', new_event_path %>
 
     <%= button_to 'Logout', '/logout', method: :delete %>
 
