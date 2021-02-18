@@ -14,13 +14,15 @@
 
         <% Event.where(creator_id: current_user.id).each do |event| %>
 
-            <p> <%= event.description %> </p>
+            <p> <%= link_to event.description, event_path(event) %> </p>
 
         <% end %>
     
     <% end %>
 
-    <%= link_to 'Create new event', new_event_path %>
+    <%= link_to 'Create new event', new_event_path %></br>
+
+    <%= link_to 'All current events', events_path %>
 
     <%= button_to 'Logout', '/logout', method: :delete %>
 

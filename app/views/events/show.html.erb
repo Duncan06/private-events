@@ -1,0 +1,2 @@
+<p><%= User.find_by(id: @event.creator_id).name%></p>
+<%= button_to 'Home', '/welcome', method: :get %>

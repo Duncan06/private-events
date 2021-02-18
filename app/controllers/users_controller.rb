@@ -8,10 +8,6 @@ class UsersController < ApplicationController
 
   # GET /users/1 or /users/1.json
   def show
-    set_user
-    session[:current_user_id] = @user.id
-
-    redirect_to '/welcome'
   end
 
   # GET /users/new
@@ -31,8 +27,8 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        format.html { redirect_to @user, notice: "User was successfully created." }
-        format.json { render :show, status: :created, location: @user }
+        format.html { redirect_to '/welcome', notice: "User was successfully created." }
+        format.json { render :show, status: :created, location: '/welcome' }
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @user.errors, status: :unprocessable_entity }
