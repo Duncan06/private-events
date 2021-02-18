@@ -1,4 +1,4 @@
 <% Event.find_each do |event| %>
-    <%= event.description %></br>
+    <p> <%= link_to event.description, event_path(event) %> </p>
 <% end %>
 <%= button_to 'Home', '/welcome', method: :get %>
