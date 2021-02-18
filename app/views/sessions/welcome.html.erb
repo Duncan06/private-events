@@ -8,13 +8,13 @@
 
     <h1>Hey <%= current_user.name %></h1>
 
-    <% if Event.where(creator_id: current_user.id) %>
+    <% if Event.find_by(creator_id: current_user.id) != nil %>
 
         <h3>Created Events</h3>
 
         <% Event.where(creator_id: current_user.id).each do |event| %>
 
-            <p> <%= event %> </p>
+            <p> <%= event.description %> </p>
 
         <% end %>
     
