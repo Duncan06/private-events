@@ -3,6 +3,8 @@
 <%= form_with model: @event do |form| %>
     <%= form.label :description %>
     <%= form.text_field :description %>
+    <%= form.label :eventdate, "Date (Format YYYY-MM-DD)" %>
+    <%= form.text_field :eventdate%>
     <%= form.submit "Create" %>
 <% end %>
 

@@ -15,9 +15,18 @@ class EventsController < ApplicationController
     def create
         @event = current_user.created_events.build(event_params)
 
-        @event.save
+        if @event.save
 
-        redirect_to '/welcome'
+            flash[:success] = "Event created"
+
+            redirect_to '/welcome'
+
+        else
+
+            render :new
+
+        end
+        
     end
 
     private
@@ -28,6 +37,6 @@ class EventsController < ApplicationController
 
         # Only allow a list of trusted parameters through.
         def event_params
-            params.require(:event).permit(:description)
+            params.require(:event).permit(:description, :eventdate)
         end
 end

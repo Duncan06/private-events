@@ -20,6 +20,30 @@
     
     <% end %>
 
+    <% if AttendedEvent.find_by(attendee_id: current_user.id) != nil %>
+
+        <% AttendedEvent.find_by(attendee_id: current_user.id).find_each do |attendee| %>
+            
+            <h3>Upcoming Events</h3>
+
+            <% if Event.find_by(creator_id: attendee.event_creator_id).eventdate < Time.now %>
+
+                <%= Event.find_by(creator_id: attendee.event_creator_id).description %>
+            
+            <% end %>
+
+            <h3>Previously Attended Events</h3>
+
+            <% if Event.find_by(creator_id: attendee.event_creator_id).eventdate > Time.now %>
+
+                <%= Event.find_by(creator_id: attendee.event_creator_id).description %>
+
+            <% end %>
+
+        <% end %>
+
+    <% end %>
+
     <%= link_to 'Create new event', new_event_path %></br>
 
     <%= link_to 'All current events', events_path %>
