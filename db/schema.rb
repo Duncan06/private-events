@@ -25,9 +25,9 @@ ActiveRecord::Schema.define(version: 2021_02_20_005223) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "description"
-    t.integer "creator_id", null: false
+    t.integer "user_id", null: false
     t.date "eventdate"
-    t.index ["creator_id"], name: "index_events_on_creator_id"
+    t.index ["user_id"], name: "index_events_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -38,5 +38,5 @@ ActiveRecord::Schema.define(version: 2021_02_20_005223) do
 
   add_foreign_key "attended_events", "events", column: "event_creator_id"
   add_foreign_key "attended_events", "users", column: "attendee_id"
-  add_foreign_key "events", "users", column: "creator_id"
+  add_foreign_key "events", "users", column: "user_id"
 end
