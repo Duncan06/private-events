@@ -20,23 +20,43 @@
     
     <% end %>
 
-    <% if AttendedEvent.find_by(attendee_id: current_user.id) != nil %>
+    <% if EventAttendance.find_by(attendee_id: current_user.id) != nil %>
 
-        <% AttendedEvent.find_by(attendee_id: current_user.id).find_each do |attendee| %>
-            
+        <% if Event.future.where('attendee_id == ?', current_user.id) %>
+
             <h3>Upcoming Events</h3>
 
-            <% if Event.find_by(creator_id: attendee.event_creator_id).eventdate < Time.now %>
+        <% end %>
 
-                <%= Event.find_by(creator_id: attendee.event_creator_id).description %>
-            
+        <% Event.future.each do |event| %>
+
+            <% EventAttendance.find_each do |attendee| %>
+
+                <% if attendee.attendee_id == current_user.id && event.creator_id == attendee.attended_event_id %>
+
+                    <%= event.description %>
+                
+                <% end %>
+
             <% end %>
+
+        <% end %>
+
+        <% if Event.past.where('attendee_id == ?', current_user.id) %>
 
             <h3>Previously Attended Events</h3>
 
-            <% if Event.find_by(creator_id: attendee.event_creator_id).eventdate > Time.now %>
+        <% end %>
+            
+        <% Event.past.each do |event| %>
 
-                <%= Event.find_by(creator_id: attendee.event_creator_id).description %>
+            <% EventAttendance.find_each do |attendee| %>
+
+                <% if attendee.attendee_id == current_user.id && event.creator_id == attendee.attended_event_id %>
+
+                    <%= event.description %>
+                
+                <% end %>
 
             <% end %>
 
