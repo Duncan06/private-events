@@ -29,6 +29,18 @@ class EventsController < ApplicationController
         
     end
 
+    def attend
+
+        @event = Event.find(params[:id])
+        if @event.attendees.include?(current_user)
+            redirect_to @event, notice: "Already on list."
+        else
+            @event.attendees << current_user
+            redirect_to @event
+        end
+        
+    end
+
     private
         # Use callbacks to share common setup or constraints between actions.
         def set_event

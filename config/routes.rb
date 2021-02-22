@@ -1,7 +1,15 @@
 Rails.application.routes.draw do
   resources :users
 
-  resources :events, only: [:index, :show, :new, :create]
+  resources :events, only: [:index, :show, :new, :create] do
+
+    member do
+
+      get 'attend'
+
+    end
+
+  end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 
   root 'sessions#welcome'

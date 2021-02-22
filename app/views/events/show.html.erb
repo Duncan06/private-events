@@ -1,10 +1,13 @@
 <h2>Creator</h2>
 <p><%= User.find_by(id: @event.creator_id).name%></p>
 
+<% if false %>
 <% if AttendedEvent.find_by(attendee_id: current_user.id) != nil %>
     <h3>Those Attending</h3>
     <% AttendedEvent.find_by(event_creator: @event.creator_id).find_each do |attendee| %>
         <%= User.find_by(id: attende.attendee.id).name %>
     <% end %>
 <% end %>
+<% end %>
+<%= link_to 'Sign up for event', attend_event_path %>
 <%= button_to 'Home', '/welcome', method: :get %>
