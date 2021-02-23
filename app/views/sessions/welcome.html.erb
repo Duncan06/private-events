@@ -32,9 +32,11 @@
 
             <% EventAttendance.find_each do |attendee| %>
 
+                <%= attendee %>
+
                 <% if attendee.attendee_id == current_user.id && event.creator_id == attendee.attended_event_id %>
 
-                    <%= event.description %>
+                    <p> <%= link_to event.description, event_path(event) %> </p>
                 
                 <% end %>
 
@@ -54,7 +56,7 @@
 
                 <% if attendee.attendee_id == current_user.id && event.creator_id == attendee.attended_event_id %>
 
-                    <%= event.description %>
+                    <p> <%= link_to event.description, event_path(event) %> </p>
                 
                 <% end %>
 
