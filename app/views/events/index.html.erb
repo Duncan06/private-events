@@ -1,4 +1,16 @@
-<% Event.find_each do |event| %>
+<h3>Upcoming Events</h3>
+
+<% Event.future.each do |event| %>
+
     <p> <%= link_to event.description, event_path(event) %> </p>
+
+<% end %>
+
+<h3>Previous Events</h3>
+    
+<% Event.past.each do |event| %>
+
+    <p> <%= link_to event.description, event_path(event) %> </p>
+
 <% end %>
 <%= button_to 'Home', '/welcome', method: :get %>
