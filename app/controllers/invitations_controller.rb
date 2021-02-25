@@ -1,9 +1,5 @@
 class InvitationsController < ApplicationController
 
-    def new
-      @invitation = Invitation.new
-    end
-
     def create
       @invitation = Inviation.new(initation_params)
 
