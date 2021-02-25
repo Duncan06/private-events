@@ -1,6 +1,16 @@
 <h2>Creator</h2>
 <p><%= User.find_by(id: @event.creator_id).name%></p>
 
+<% if current_user.id == @event.creator_id %>
+  <h4>Send invites for your event</h4>
+  <% User.find_each do |user| %>
+    <% if user.name != current_user.name %>
+      <p><%= user.name %>
+      <%= button_tag 'Invite', class: 'btn btn-primary', data: {disable_with: "Invite pending..."} %></p>
+    <% end %>
+  <% end %>
+<% end %>
+
 <h3>Those Attending</h3>
 <% EventAttendance.find_each do |attendee| %>
     <%= User.find_each do |user| %>
