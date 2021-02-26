@@ -6,12 +6,18 @@
   <% User.find_each do |user| %>
     <% if user.name != current_user.name %>
       <%= user.name %>
-      <%= form_with(url: '/invitations', method: 'post') do |form| %>
-        <%= form.submit "Invite", class: 'button', data: { disable_with: "Invite pending..." }, user_id: user.id, event_id: @event.event_attendances %>
+      <% invitation = Invitation.find_by(event_id: @event.id, user_id: user.id) %>
+        <% unless invitation.nil? || invitation.status.nil? %>
+          <p><%= invitation.status %></p>
+        <% end %>
+        <% if invitation.nil? %>
+          <%= button_to "Invite", invitations_path(event_id: @event.id, user_id: user.id) %>
+        <% else %>
+          <%= button_to "Cancel Invitation", invitation_path(id: invitation.id, event_id: @event.id), method: :delete %>
+        <% end %>
       <% end %>
     <% end %>
   <% end %>
-<% end %>
 
 <h3>Those Attending</h3>
 <% EventAttendance.find_each do |attendee| %>

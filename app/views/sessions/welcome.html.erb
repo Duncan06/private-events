@@ -64,6 +64,32 @@
 
     <% end %>
 
+    <% if Invitation.find_by(user_id: current_user.id) != nil %>
+
+        <h3>Invitations to events</h3>
+
+            <% Event.find_each do |event| %>
+
+                <% Invitation.find_each do |inv| %>
+
+                    <% if inv.user_id == current_user.id && inv.event_id == event.id %>
+
+                        <div>
+
+                            <%= event.description %>
+
+                            <%= button_to "Accept", invitation_path(event_id: event.id, id: inv.id), method: :patch %>
+
+                        </div>
+                    
+                    <% end %>
+
+                <% end %>
+
+            <% end %>
+
+    <% end %>
+
     <%= link_to 'Create new event', new_event_path %></br>
 
     <%= link_to 'All current events', events_path %>
