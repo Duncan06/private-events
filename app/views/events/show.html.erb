@@ -6,7 +6,7 @@
   <% User.find_each do |user| %>
     <% if user.name != current_user.name %>
       <%= user.name %>
-      <%= form_with(url: '../invitations', method: 'post') do |form| %>
+      <%= form_with(url: '/invitations', method: 'post') do |form| %>
         <%= form.submit "Invite", class: 'button', data: { disable_with: "Invite pending..." }, user_id: user.id, event_id: @event.event_attendances %>
       <% end %>
     <% end %>
