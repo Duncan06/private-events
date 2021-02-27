@@ -20,12 +20,17 @@
   <% end %>
 
 <h3>Those Attending</h3>
-<% EventAttendance.find_each do |attendee| %>
-    <%= User.find_each do |user| %>
-        <% if attendee.attended_event_id == @event.creator_id && attendee.attendee_id == user.id %>
+<%= User.find_each do |user| %>
+  <% Invitation.find_each do |inv| %>
+        <% if inv.event_id == @event.id && inv.user_id == user.id %>
+          <% if inv.accepted? %>
             <p><%= user.name %></p>
+          <% elsif inv.invited? %>
+            <h4>Pending invitation</h4>
+              <p><%= user.name %></p>
+          <% end %>
         <% end %>
     <% end %>
 <% end %>
-<%= link_to 'Sign up for event', attend_event_path %>
+
 <%= button_to 'Home', '/welcome', method: :get %>

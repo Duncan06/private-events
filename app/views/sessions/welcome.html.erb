@@ -20,7 +20,7 @@
     
     <% end %>
 
-    <% if EventAttendance.find_by(attendee_id: current_user.id) != nil %>
+    <% if Invitation.find_by(user_id: current_user.id) != nil %>
 
         <% if Event.future.where('attendee_id == ?', current_user.id) %>
 
@@ -30,9 +30,9 @@
 
         <% Event.future.each do |event| %>
 
-            <% EventAttendance.find_each do |attendee| %>
+            <% Invitation.find_each do |attendee| %>
 
-                <% if attendee.attendee_id == current_user.id && event.creator_id == attendee.attended_event_id %>
+                <% if attendee.user_id == current_user.id && event.id == attendee.event_id && attendee.accepted? %>
 
                     <p> <%= link_to event.description, event_path(event) %> </p>
                 
@@ -50,9 +50,9 @@
             
         <% Event.past.each do |event| %>
 
-            <% EventAttendance.find_each do |attendee| %>
+            <% Invitation.find_each do |attendee| %>
 
-                <% if attendee.attendee_id == current_user.id && event.creator_id == attendee.attended_event_id %>
+                <% if attendee.user_id == current_user.id && event.id == attendee.event_id && attendee.accepted? %>
 
                     <p> <%= link_to event.description, event_path(event) %> </p>
                 
@@ -78,7 +78,15 @@
 
                             <%= event.description %>
 
-                            <%= button_to "Accept", invitation_path(event_id: event.id, id: inv.id), method: :patch %>
+                            <% if !inv.accepted? %>
+
+                                <%= button_to "Accept", invitation_path(id: inv.id), method: :patch %>
+
+                            <% else %>
+
+                                <%= button_to "Cancel invitation", invitation_path(id: inv.id, event_id: event.id), method: :delete %>
+
+                            <% end %>
 
                         </div>
                     
